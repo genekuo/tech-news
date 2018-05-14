@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { sortBy } from 'lodash';
+import classNames from 'classnames';
 import './App.css';
 
 const DEFAULT_QUERY = 'redux';
@@ -211,6 +212,7 @@ const Table = ({
                 <Sort
                   sortKey={'TITLE'}
                   onSort={onSort}
+                  activeSortKey={sortKey}
                 >
                   Title
                 </Sort>
@@ -219,6 +221,7 @@ const Table = ({
                 <Sort
                   sortKey={'AUTHOR'}
                   onSort={onSort}
+                  activeSortKey={sortKey}
                 >
                   Author
                 </Sort>
@@ -227,6 +230,7 @@ const Table = ({
                 <Sort
                   sortKey={'COMMENTS'}
                   onSort={onSort}
+                  activeSortKey={sortKey}
                 >
                   Comments
                 </Sort>
@@ -235,6 +239,7 @@ const Table = ({
                 <Sort
                   sortKey={'POINTS'}
                   onSort={onSort}
+                  activeSortKey={sortKey}
                 >
                   Points
                 </Sort>
@@ -267,15 +272,24 @@ const Table = ({
 
 const Sort = ({
   sortKey,
+  activeSortKey,
   onSort,
   children
-}) =>
-    <Button
-      onClick={() => onSort(sortKey)}
-      className="button-inline"
-    >
-      {children}
-    </Button>
+}) => {
+    const sortClass = classNames(
+      'button-inline',
+      { 'button-active': sortKey === activeSortKey }
+    );
+
+    return (
+      <Button
+        onClick={() => onSort(sortKey)}
+        className={sortClass}
+      >
+        {children}
+      </Button>
+    );
+  }
 
 const Button = ({
   onClick,
